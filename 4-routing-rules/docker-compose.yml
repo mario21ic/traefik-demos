@@ -13,12 +13,14 @@ services:
   nginx:
     image: nginx:alpine
     labels:
-      - "traefik.http.routers.nginx.rule=Host(`nginx.mario21ic.com`) || Host(`web.mario21ic.com`)"
+      - "traefik.http.routers.nginx.rule=Host(`nginx.mario21ic.com`) && Path(`/traefik/`) && Query(`foo=bar`)"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/traefik/index.html
 
   apache:
     image: httpd:alpine
     labels:
-      - "traefik.http.routers.apache.rule=Host(`apache.mario21ic.com`) && Path(`/traefik`) && Query(`foo=bar`)"
+      - "traefik.http.routers.apache.rule=Host(`apache.mario21ic.com`) || Host(`web.mario21ic.com`)"
 
   app:
     image: app:latest
