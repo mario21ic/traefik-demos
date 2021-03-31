@@ -18,8 +18,8 @@ services:
     image: nginx:alpine
     labels:
       - "traefik.http.routers.nginx.rule=Host(`nginx.mario21ic.com`) && Path(`/traefik/`) && Query(`foo=bar`)"
-    volumes:
-      - ./index.html:/usr/share/nginx/html/traefik/index.html
+      - "traefik.http.middlewares.test-stripprefix.stripprefix.prefixes=/traefik,/foobar"
+      - "traefik.http.routers.nginx.middlewares=test-stripprefix"
 
   apache:
     image: httpd:alpine
