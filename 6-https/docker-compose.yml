@@ -7,10 +7,6 @@ services:
       - "80:80"
       - "443:443"
       - "8080:8080"
-    #labels:
-      #- "traefik.http.routers.myauth.rule=HostRegexp(`{host:.+}`)"
-      #- "traefik.http.middlewares.my-auth.basicauth.users=admin:$$2y$$05$$U.U0XSwpOnYq35mGy9Rnru1lS60T.o1OsTbuslWcv/zefwroyFEhe"
-      #- "traefik.http.routers.myauth.middlewares=my-auth"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.yml:/traefik.yml
@@ -19,16 +15,14 @@ services:
   nginx:
     image: nginx:alpine
     labels:
-      - "traefik.http.routers.nginx.rule=Host(`nginx.marioinga.com`) && Path(`/traefik/`) && Query(`foo=bar`)"
-      - "traefik.http.middlewares.test-stripprefix.stripprefix.prefixes=/traefik,/foobar"
-      - "traefik.http.routers.nginx.middlewares=test-stripprefix"
+      - "traefik.http.routers.nginx.rule=Host(`nginx.marioinga.com`)"
       - "traefik.http.routers.nginx.entrypoints=websecure"
-      - "traefik.http.routers.nginx.tls.certresolver=myresolver
+      - "traefik.http.routers.nginx.tls.certresolver=myresolver"
 
   apache:
     image: httpd:alpine
     labels:
       - "traefik.http.routers.apache.rule=Host(`apache.marioinga.com`) || Host(`web.marioinga.com`)"
       - "traefik.http.routers.apache.entrypoints=websecure"
-      - "traefik.http.routers.apache.tls.certresolver=myresolver
+      - "traefik.http.routers.apache.tls.certresolver=myresolver"
 
