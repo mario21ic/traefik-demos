@@ -13,6 +13,9 @@ curl -H "Host: apache.mario21ic.com" localhost/traefik?foo=bar
 Dashboard:
 Open http://localhost:8080/dashboard in your browser
 
+Api:
+Open http://localhost:8080/api/rawdata in your browser
+
 http://apache.mario21ic.com/
 http://web.mario21ic.com/
 http://nginx.mario21ic.com/traefik/?foo=bar -> This doesn't need a new index.html
@@ -20,3 +23,5 @@ http://nginx.mario21ic.com/traefik/?foo=bar -> This doesn't need a new index.htm
 Credentials:
 admin
 password
+
+Note: only app.mario21ic.com is exposed
