@@ -24,4 +24,4 @@ Credentials:
 admin
 password
 
-Note: only app.mario21ic.com is exposed
+Note: only app.mario21ic.com is exposed. Also nginx.mario21ic.com has environment dev
