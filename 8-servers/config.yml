@@ -1,0 +1,28 @@
+http:
+    routers:
+        apache:
+            rule: "Host(`server.apache.mario21ic.com`)"
+            service: apache-svc
+            middlewares:
+                - "my-auth"
+        #nginx:
+        #    rule: "Host(`server.nginx.mario21ic.com`)"
+        #    service: nginx-svc
+
+    services:
+        apache-svc:
+            loadBalancer: # round robin
+                sticky:
+                    cookie: {}
+                servers:
+                    - url: "http://192.168.1.107"
+                    - url: "http://192.168.1.102"
+        #nginx-svc:
+        #    loadBalancer:
+        #        servers:
+        #            - url: "http://192.168.1.102"
+    middlewares:
+        my-auth:
+            basicAuth:
+                users:
+                  - "admin:$apr1$z29jqv1u$LI1ONyGEou628pPjyickG0"

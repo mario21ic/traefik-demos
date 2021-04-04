@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "nginx" do |n|
+    n.vm.box = "hashicorp/bionic64"
+    n.vm.network "public_network", use_dhcp_assigned_default_route: true, bridge: "enp3s0"
+    n.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+      vb.cpus = 1
+    end
+    n.vm.provision "shell", inline: "sudo apt-get update"
+    n.vm.provision "shell", inline: "sudo apt-get install -y nginx"
+  end
+  
+  config.vm.define "apache" do |a|
+    a.vm.box = "hashicorp/bionic64"
+    a.vm.network "public_network", use_dhcp_assigned_default_route: true, bridge: "enp3s0"
+    a.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+      vb.cpus = 1
+    end
+    a.vm.provision "shell", inline: "sudo apt-get update"
+    a.vm.provision "shell", inline: "sudo apt-get install -y apache2"
+  end
+
+  config.vm.synced_folder ".", "/vagrant", type: "smb", disabled: true
+
+end

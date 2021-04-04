@@ -37,7 +37,7 @@ services:
     labels:
       - "traefik.http.routers.app.rule=Host(`app.mario21ic.com`)"
       - "traefik.http.services.app.loadbalancer.server.port=8081"
-      - "traefik.http.middlewares.test-auth.basicauth.users=admin:$$2y$$05$$U.U0XSwpOnYq35mGy9Rnru1lS60T.o1OsTbuslWcv/zefwroyFEhe"
+      - "traefik.http.middlewares.test-auth.basicauth.users=admin:$apr1$z29jqv1u$LI1ONyGEou628pPjyickG0"
       - "traefik.http.routers.app.middlewares=test-auth"
       - "traefik.enable=true"
       - "environment=dev"

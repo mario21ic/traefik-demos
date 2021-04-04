@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  proxy:
+    image: traefik:v2.1
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yml:/traefik.yml
+      - ./traefik.log:/traefik.log
+      - ./config.yml:/config.yml
+  
+  nginx:
+    image: nginx:alpine
+    labels:
+      - "traefik.http.routers.nginx.rule=Host(`nginx.mario21ic.com`) && Path(`/traefik/`) && Query(`foo=bar`)"
+      - "traefik.http.middlewares.test-stripprefix.stripprefix.prefixes=/traefik,/foobar"
+      - "traefik.http.routers.nginx.middlewares=test-stripprefix,my-auth@file"
+      - "traefik.enable=true"
+      #- "environment=dev"
+
+  httpd:
+    image: httpd:alpine
+    labels:
+      - "traefik.http.routers.httpd.rule=Host(`httpd.mario21ic.com`) || Host(`web.mario21ic.com`)"
+      - "traefik.enable=true"
+      #- "environment=production"
+
